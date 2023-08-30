@@ -23,6 +23,35 @@ namespace Microsoft.Maui.UnitTests.Layouts
 		const string GridAbsoluteSizing = "GridAbsoluteSizing";
 		const string GridSpan = "GridSpan";
 
+		[Fact]
+		[Category(GridStarSizing)]
+		public void GridRowsDistributeCorrectly()
+		{
+			var height = 367; // this is the value that reaches the layout
+			var totalStars = 5 + 1 + 13 + 1 + 5;
+			var oneHeight = (double)height / totalStars;
+
+			var grid = CreateGridLayout(rows: "5*,1*,13*,1*,5*");
+			grid.DesiredSize.Returns(new Size(100, height));
+			grid.Width.Returns(100);
+			grid.Height.Returns(height);
+
+			var view0 = CreateTestView(new Size(10, 73.4));
+			var view1 = CreateTestView(new Size(10, 10));
+			var view2 = CreateTestView(new Size(10, 10));
+
+			SetLocation(grid, view0, row: 0);
+			SetLocation(grid, view1, row: 1);
+			SetLocation(grid, view2, row: 3);
+			SubstituteChildren(grid, view0, view1, view2);
+
+			_ = MeasureAndArrange(grid);
+
+			AssertArranged(view0, new Rect(0, 0, 100, 5 * oneHeight));
+			AssertArranged(view1, new Rect(0, 5 * oneHeight, 100, 1 * oneHeight));
+			AssertArranged(view2, new Rect(0, 19 * oneHeight, 100, 1 * oneHeight));
+		}
+
 		IGridLayout CreateGridLayout(int rowSpacing = 0, int colSpacing = 0,
 			string rows = null, string columns = null, IList<IView> children = null)
 		{
