@@ -28,7 +28,7 @@ namespace Microsoft.Maui.UnitTests.Layouts
 		[Category(GridStarSizing)]
 		public void GridRowsDistributeCorrectly()
 		{
-			var height = 172.39999389648438; // this is the value that reaches the layout
+			var height = 367.0; // this is the value that reaches the layout
 			var totalStars = 5 + 1 + 13 + 1 + 5;
 			var oneHeight = height / totalStars;
 
@@ -37,7 +37,7 @@ namespace Microsoft.Maui.UnitTests.Layouts
 			grid.Width.Returns(100);
 			grid.Height.Returns(height);
 
-			var view0 = CreateTestView(new Size(10, 10));
+			var view0 = CreateTestView(new Size(10, 73.4));
 			var view1 = CreateTestView(new Size(10, 10));
 			var view2 = CreateTestView(new Size(10, 10));
 
@@ -49,8 +49,8 @@ namespace Microsoft.Maui.UnitTests.Layouts
 			_ = MeasureAndArrange(grid);
 
 			AssertArranged(view0, new Rect(0, 0, 100, 5 * oneHeight));
-			AssertArranged(view1, new Rect(0, 0, 100, 1 * oneHeight));
-			AssertArranged(view2, new Rect(0, 0, 100, 1 * oneHeight));
+			AssertArranged(view1, new Rect(0, 5 * oneHeight, 100, 1 * oneHeight));
+			AssertArranged(view2, new Rect(0, 19 * oneHeight, 100, 1 * oneHeight));
 		}
 
 
