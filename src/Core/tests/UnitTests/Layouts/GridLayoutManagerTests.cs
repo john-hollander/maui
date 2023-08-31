@@ -37,7 +37,7 @@ namespace Microsoft.Maui.UnitTests.Layouts
 			grid.Width.Returns(100);
 			grid.Height.Returns(height);
 
-			var view0 = CreateTestView(new Size(10, 73.4));
+			var view0 = CreateTestView(new Size(10, 5 * oneHeight));
 			var view1 = CreateTestView(new Size(10, 10));
 			var view2 = CreateTestView(new Size(10, 10));
 
